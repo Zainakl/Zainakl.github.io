@@ -378,18 +378,18 @@
 </li>
 <li><p>打开 <a target="_blank" rel="noopener" href="https://cdimage.ubuntu.com/releases/24.04/release/">https://cdimage.ubuntu.com/releases/24.04/release/</a> 网站</p>
 <p>下载 </p>
-<p><img src="D:\blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\1.png" alt="imag"></p>
-<p><img src="D:\blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\2.png" alt="imag"></p>
+<p><img src="/.com//blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\1.png" alt="imag"></p>
+<p><img src="/.com//blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\2.png" alt="imag"></p>
 </li>
 </ol>
 <p>3.安装 qemu </p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install qemu-system-riscv64</span><br></pre></td></tr></table></figure>
 
-<p><img src="D:\blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\3.png" alt="imag"></p>
+<p><img src="/.com//blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\3.png" alt="imag"></p>
 <p>4.解压 img </p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xz -d ubuntu-24.04-preinstalled-server-riscv64.img.xz</span><br></pre></td></tr></table></figure>
 
-<p><img src="D:\blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\4.png" alt="imag"></p>
+<p><img src="/.com//blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\4.png" alt="imag"></p>
 <p>5.<strong>准备固件和依赖</strong></p>
 <p>QEMU运行RISC-V需要固件（如OpenSBI和U-Boot）。Ubuntu官方教程推荐以下文件：</p>
 <p><strong>OpenSBI</strong>（提供固件支持）：</p>
@@ -414,21 +414,21 @@
 <li>安装OpenSBI  和 U-Boot</li>
 </ol>
 <p> 安装 OpenSBI  make PLATFORM&#x3D;generic 报错</p>
-<p><img src="D:\blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\5.png" alt="imag"></p>
+<p><img src="/.com//blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\5.png" alt="imag"></p>
 <p>问题是因为没有安装riscv的工具链 </p>
 <p>安装riscv工具链 </p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gcc-riscv64-linux-gnu g++-riscv64-linux-gnu binutils-riscv64-linux-gnu</span><br></pre></td></tr></table></figure>
 
-<p><img src="D:\blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\6.png" alt="imag"></p>
+<p><img src="/.com//blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\6.png" alt="imag"></p>
 <p>再次编译 编译成功 </p>
-<p><img src="D:\blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\7.png" alt="imag">**</p>
-<p><img src="D:\blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\8.png" alt="imag"></p>
+<p><img src="/.com//blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\7.png" alt="imag">**</p>
+<p><img src="/.com//blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\8.png" alt="imag"></p>
 <p>启动 qemu</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-riscv64 \</span><br><span class="line">  -nographic \</span><br><span class="line">  -machine virt \</span><br><span class="line">  -m 8G \</span><br><span class="line">  -smp 8 \</span><br><span class="line">  -bios ~/Desktop/kaiyuan/opensbi/build/platform/generic/firmware/fw_jump.bin \</span><br><span class="line">  -kernel ~/Desktop/kaiyuan/u-boot/u-boot.bin \</span><br><span class="line">  -append &quot;root=/dev/vda rw console=ttyS0&quot; \</span><br><span class="line">  -drive file=~/Desktop/kaiyuan/ubuntu-24.04.2-preinstalled-server-riscv64.img,format=raw,id=hd0 \</span><br><span class="line">  -device virtio-blk-device,drive=hd0 \</span><br><span class="line">  -netdev user,id=net0,hostfwd=tcp:0.0.0.0:2222-:22 \</span><br><span class="line">  -device virtio-net-device,netdev=net0</span><br></pre></td></tr></table></figure>
 
 <p>成功安装Ubuntu24.04 riscv架构的操作系统</p>
-<p><img src="D:\blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\9.png" alt="imag"></p>
-<p>连接 vscode （ssh <a href="mailto:&#x75;&#x62;&#117;&#110;&#x74;&#x75;&#x40;&#x31;&#57;&#50;&#x2e;&#x31;&#54;&#56;&#x2e;&#x32;&#51;&#49;&#x2e;&#x31;&#x33;&#x37;">ubuntu@192.168.231.137</a> -p 2222 替代）</p>
+<p><img src="/.com//blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\9.png" alt="imag"></p>
+<p>连接 vscode （ssh <a href="mailto:&#x75;&#98;&#117;&#x6e;&#x74;&#117;&#64;&#x31;&#57;&#50;&#x2e;&#49;&#x36;&#56;&#x2e;&#x32;&#51;&#49;&#46;&#49;&#x33;&#55;">ubuntu@192.168.231.137</a> -p 2222 替代）</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh ubuntu@192.168.231.137 -p 2222</span><br></pre></td></tr></table></figure>
 
 
@@ -444,9 +444,9 @@
 
 
 
-<p><img src="D:\blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\10.png" alt="imag"></p>
+<p><img src="/.com//blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\10.png" alt="imag"></p>
 <p>vscode 无法连接 riscv的体系架构</p>
-<p><img src="D:\blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\11.png" alt="imag"></p>
+<p><img src="/.com//blog\blog\source_posts\在Ubuntu上用Qemu模拟RISC-v\11.png" alt="imag"></p>
 
     </article>
     
